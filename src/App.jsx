@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Sidebar from './components/sidebar/Sidebar'
-import Home from './components/layout/Home'
-import AboutMe from './components/layout/AboutMe'
-import Works from './components/layout/Works'
-import Contact from './components/layout/Contact'
+import Home from './components/home/Home'
+import AboutMe from './components/aboutMe/AboutMe'
+import Works from './components/works/Works'
+import Contact from './components/contact/Contact'
 
 import './App.css'
 
@@ -16,9 +16,6 @@ function App() {
       <AboutMe />
       <Works />
       <Contact />
-      <div style={{ marginLeft: "250px" }}>
-
-      </div>
     </>
   )
 }

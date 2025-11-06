@@ -32,16 +32,20 @@ const Sidebar = () => {
 
     return (
         <div style={{
+            marginLeft: '35px',
             position: 'fixed',
             width: '240px',
             height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
         }}>
+            {/* first div */}
             <div style={{
-                marginLeft: `35px`,
-                marginTop: '100px',
+                marginTop: "100px",
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '100px',
+                gap: '40px',
                 alignItems: 'flex-start',
             }}>
                 {sectionMap.map(({ id, label, href }) => (
@@ -57,6 +61,16 @@ const Sidebar = () => {
                         {label}
                     </a>
                 ))}
+            </div>
+
+            {/* second div */}
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                marginBottom: "100px",
+                gap: "10px"
+            }}>
+
             </div>
         </div>
     );
