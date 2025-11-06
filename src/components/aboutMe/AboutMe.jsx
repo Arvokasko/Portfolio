@@ -64,12 +64,6 @@ const AboutMe = () => {
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <i className='fab fa-github fa-4x'></i>
                         </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
                     </div>
                 </div>
             </div>
