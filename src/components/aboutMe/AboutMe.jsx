@@ -29,69 +29,47 @@ const AboutMe = () => {
                     }}>
 
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-                                alt="icon"
-                                style={{ width: "80px", height: "80px", }}
-                            />
+                            <i className='fab fa-github fa-4x'></i>
                         </div>
-
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-github fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-github fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-github fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-github fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-github fa-4x'></i>
+                        </div>
                     </div>
                 </div>
             </div>

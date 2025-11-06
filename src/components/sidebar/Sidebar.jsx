@@ -70,7 +70,9 @@ const Sidebar = () => {
                 marginBottom: "100px",
                 gap: "10px"
             }}>
-
+                <a href="https://github.com/arvokasko">
+                    <i class="fab fa-github" style={{ fontSize: "30px" }}></i>
+                </a>
             </div>
         </div>
     );
