@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageSlider from '../ImageSlider'
+import ImageSlider from './ImageSlider'
 
 const Works = () => {
     return (
@@ -19,9 +19,7 @@ const Works = () => {
                     gap: "20px",
                 }}>
                     <ImageSlider />
-                    {/* <div style={{ width: "500px", height: "250px", backgroundColor: "gray", textAlign: "center" }}>
-                        <h1>papa</h1>
-                    </div> */}
+
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ const Home = () => {
             }}
         >
             <video autoPlay muted loop className="background-video">
-                <source src="\src\assets\background2.mp4" type="video/mp4" />
+                <source src="\src\assets\Timeline.mp4" type="video/mp4" />
             </video>
             <h1 style={{ fontSize: "150px" }}>Aaron Huhtala</h1>
             <div className='fadeDiv'></div>

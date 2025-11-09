@@ -29,40 +29,34 @@ const AboutMe = () => {
                     }}>
 
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
+                            <i className='fab fa-html5 fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-css3 fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-js fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-php fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-python fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-wordpress fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-microsoft fa-4x'></i>
+                        </div>
+                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <i className='fab fa-adobe fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <i className='fab fa-github fa-4x'></i>
                         </div>
                         <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <i className='fab fa-github fa-4x'></i>
+                            <i className='fab fa-react fa-4x'></i>
                         </div>
                     </div>
                 </div>
