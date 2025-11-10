@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
+
 const ImageSlider = () => {
     const gap = 20; // spacing between images
     const imageWidth = 600; // actual image width
     const visibleCount = 1;
 
+    const baseAssetUrl = import.meta.env.BASE_URL;
+
     const originalImages = [
-        { src: '/src/assets/Screenshot 2025-11-07 121857.png', link: 'https://geronimo.okol.org/~huhaar/keystone/' },
-        { src: '/src/assets/Screenshot 2025-11-07 134055.png', link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/' },
+        { src: `${baseAssetUrl}assets/Screenshot 2025-11-07 121857.png`, link: 'https://geronimo.okol.org/~huhaar/keystone/' },
+        { src: `${baseAssetUrl}assets/Screenshot 2025-11-07 134055.png`, link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/' },
     ];
 
     const images = [
@@ -67,7 +70,7 @@ const ImageSlider = () => {
                                 alt={`Slide ${index + 1}`}
                                 style={styles.image}
                             />
-                            <i style={{ position: "absolute", bottom: 0, margin: "25px 40px" }} class="fa fa-external-link-alt fa-2x"></i>
+                            <i style={{ position: "absolute", bottom: 0, margin: "25px 40px" }} className="fa fa-external-link-alt fa-2x"></i>
                         </a>
                     ))}
                 </div>

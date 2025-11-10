@@ -2,6 +2,8 @@ import React from 'react'
 import './Home.css';
 
 const Home = () => {
+    const videoSrc = `${import.meta.env.BASE_URL}assets/Timeline.mp4`;
+
     return (
         <div id='home'
             style={{
@@ -12,7 +14,7 @@ const Home = () => {
             }}
         >
             <video autoPlay muted loop className="background-video">
-                <source src="\src\assets\Timeline.mp4" type="video/mp4" />
+                <source src={videoSrc} type="video/mp4" />
             </video>
             <h1 style={{ fontSize: "150px" }}>Aaron Huhtala</h1>
             <div className='fadeDiv'></div>
