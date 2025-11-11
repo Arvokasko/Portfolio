@@ -16,7 +16,7 @@ const Home = () => {
             <video autoPlay muted loop className="background-video">
                 <source src={videoSrc} type="video/mp4" />
             </video>
-            <h1 style={{ fontSize: "150px" }}>Aaron Huhtala</h1>
+            <h1 className='homeHeader'>Aaron Huhtala</h1>
             <div className='fadeDiv'></div>
         </div>
     )

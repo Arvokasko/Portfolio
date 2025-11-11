@@ -1,6 +1,8 @@
 import React from 'react'
+import LinkIcons from './LinkIcons';
 
-const AboutMe = () => {
+
+const Contact = () => {
     return (
         <div id='contact'
             style={{
@@ -14,35 +16,21 @@ const AboutMe = () => {
             <h1>
                 Contact me
             </h1>
-            <div style={{ maxWidth: "1000px", width: "100%", overflowWrap: "break-word" }}>
+            <div style={{ maxWidth: "1000px", width: "90%", overflowWrap: "break-word" }}>
 
                 <div>
                     <div style={{
-                        display: "flex",
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
                         alignItems: "center",
                         justifyContent: "center",
                     }}>
 
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <a href="mailto:aaron.huhtala08@gmail.com" target='_blank'>
-                                <i class="fa fa-envelope fa-4x"></i>
-                            </a>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <a href="tel:+358404195413" target='_blank'>
-                                <i class="fa fa-phone fa-4x"></i>
-                            </a>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <a href="https://github.com/arvokasko" target='_blank'>
-                                <i class="fab fa-github fa-4x"></i>
-                            </a>
-                        </div>
-                        <div style={{ width: "150px", height: "150px", margin: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <a href="https://wa.me/0404195413" target='_blank'>
-                                <i class="fab fa-whatsapp fa-4x"></i>
-                            </a>
-                        </div>
+                        <LinkIcons iconClass="fa fa-envelope fa-4x" linkUrl="mailto:aaron.huhtala08@gmail.com" />
+                        <LinkIcons iconClass="fa fa-phone fa-4x" linkUrl="tel:+358404195413" />
+                        <LinkIcons iconClass="fab fa-github fa-4x" linkUrl="https://github.com/arvokasko" />
+                        <LinkIcons iconClass="fab fa-whatsapp fa-4x" linkUrl="https://wa.me/0404195413" />
+
                     </div>
                 </div>
             </div>
@@ -50,4 +38,4 @@ const AboutMe = () => {
     )
 }
 
-export default AboutMe
+export default Contact

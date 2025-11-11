@@ -6,11 +6,13 @@ const Works = () => {
         <div id='works'
             style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 height: "100vh",
             }}
         >
+            <h1>My works</h1>
             <div>
                 <div style={{
                     display: "flex",

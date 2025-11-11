@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-
 const ImageSlider = () => {
-    const gap = 20; // spacing between images
-    const imageWidth = 600; // actual image width
+    const gap = 20;
     const visibleCount = 1;
 
     const baseAssetUrl = import.meta.env.BASE_URL;
@@ -21,10 +19,19 @@ const ImageSlider = () => {
 
     const [currentIndex, setCurrentIndex] = useState(visibleCount);
     const [transition, setTransition] = useState(true);
+    const [containerWidth, setContainerWidth] = useState(window.innerWidth);
 
     const nextSlide = () => setCurrentIndex((prev) => prev + 1);
     const prevSlide = () => setCurrentIndex((prev) => prev - 1);
 
+    // Update width on resize
+    useEffect(() => {
+        const handleResize = () => setContainerWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Reset transition when looping
     useEffect(() => {
         if (currentIndex === images.length - visibleCount) {
             setTimeout(() => {
@@ -40,6 +47,9 @@ const ImageSlider = () => {
             setTransition(true);
         }
     }, [currentIndex, images.length]);
+
+    // Responsive image width (max 600px, min 90% of viewport)
+    const imageWidth = Math.min(600, containerWidth * 0.9);
 
     return (
         <div style={styles.wrapper}>
@@ -66,9 +76,13 @@ const ImageSlider = () => {
                             style={styles.linkWrapper}
                         >
                             <img
-                                src={`${img.src}?w=600&h=400`}
+                                src={img.src}
                                 alt={`Slide ${index + 1}`}
-                                style={styles.image}
+                                style={{
+                                    ...styles.image,
+                                    width: `${imageWidth}px`,
+                                    height: 'auto',
+                                }}
                             />
                             <i style={{ position: "absolute", bottom: 0, margin: "25px 40px" }} className="fa fa-external-link-alt fa-2x"></i>
                         </a>
@@ -87,9 +101,10 @@ const styles = {
         justifyContent: 'center',
         gap: '20px',
         margin: 'auto',
+        flexWrap: 'wrap', // allows buttons to wrap on small screens
     },
     slider: {
-        height: '400px',
+        height: 'auto',
         overflow: 'hidden',
         position: 'relative',
     },
@@ -99,15 +114,16 @@ const styles = {
     linkWrapper: {
         display: 'inline-block',
         textDecoration: 'none',
+        position: 'relative',
     },
     image: {
-        width: '600px',
-        height: '400px',
+        maxWidth: '100%',
+        height: 'auto',
         objectFit: 'cover',
         borderRadius: "15px",
     },
     outsideButton: {
-        fontSize: '48px',
+        fontSize: '32px',
         color: 'white',
         background: 'none',
         border: 'none',
