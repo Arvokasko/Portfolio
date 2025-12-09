@@ -1,8 +1,12 @@
 import React from 'react'
 import LinkIcons from './LinkIcons';
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 
 const Contact = () => {
+    const titleRef = useScrollAnimation({ threshold: 0.1 });
+    const iconsRef = useScrollAnimation({ threshold: 0.1 });
+
     return (
         <div id='contact'
             style={{
@@ -13,13 +17,13 @@ const Contact = () => {
                 height: "100vh",
             }}
         >
-            <h1>
+            <h1 ref={titleRef} className='scroll-animate animate-fade'>
                 Contact me
             </h1>
             <div style={{ maxWidth: "1000px", width: "90%", overflowWrap: "break-word" }}>
 
                 <div>
-                    <div style={{
+                    <div ref={iconsRef} className='scroll-animate-group' style={{
                         display: "grid",
                         gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
                         alignItems: "center",

@@ -1,15 +1,18 @@
 import React from 'react'
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Footer = () => {
+    const footerRef = useScrollAnimation({ threshold: 0.1 });
+
     return (
-        <div id='footer' style={{
+        <div id='footer' ref={footerRef} className='scroll-animate animate-fade' style={{
             width: "100%",
             height: "500px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
         }}>
-            <p>Aaron Huhtala <i class="fa fa-copyright"></i></p>
+            <p>Aaron Huhtala <i className="fa fa-copyright"></i></p>
         </div>
     )
 }

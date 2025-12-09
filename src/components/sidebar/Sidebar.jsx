@@ -12,6 +12,12 @@ const Sidebar = () => {
     const [activeSection, setActiveSection] = useState('home');
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1500);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    // Trigger animation on load
+    useEffect(() => {
+        setIsLoaded(true);
+    }, []);
 
     // Handle screen resize
     useEffect(() => {
@@ -53,6 +59,10 @@ const Sidebar = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
+                opacity: isLoaded ? 1 : 0,
+                transform: isLoaded ? 'translateX(0)' : 'translateX(-30px)',
+                transition: 'opacity 0.6s ease, transform 0.6s ease',
+                zIndex: 10,
             }}>
                 <div style={{
                     marginTop: "100px",
@@ -61,7 +71,7 @@ const Sidebar = () => {
                     gap: '40px',
                     alignItems: 'flex-start',
                 }}>
-                    {sectionMap.map(({ id, label, href }) => (
+                    {sectionMap.map(({ id, label, href }, index) => (
                         <a
                             key={id}
                             href={href}
@@ -69,6 +79,10 @@ const Sidebar = () => {
                                 marginLeft: activeSection === id ? '50px' : '0px',
                                 scale: activeSection === id ? '1.5' : '1',
                                 transition: 'margin-left 0.5s ease',
+                                opacity: isLoaded ? 1 : 0,
+                                transform: isLoaded ? 'translateX(0)' : 'translateX(-30px)',
+                                animation: isLoaded ? `slideInLeft 0.6s ease forwards` : 'none',
+                                animationDelay: `${index * 0.1}s`,
                             }}
                         >
                             {label}
@@ -80,7 +94,10 @@ const Sidebar = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     marginBottom: "100px",
-                    gap: "10px"
+                    gap: "10px",
+                    opacity: isLoaded ? 1 : 0,
+                    transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
+                    transition: 'opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s',
                 }}>
                     <a href="https://github.com/arvokasko">
                         <i className="fab fa-github" style={{ fontSize: "30px" }}></i>

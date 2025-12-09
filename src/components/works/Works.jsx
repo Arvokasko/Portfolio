@@ -1,7 +1,11 @@
 import React from 'react'
 import ImageSlider from './ImageSlider'
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Works = () => {
+    const titleRef = useScrollAnimation({ threshold: 0.1 });
+    const contentRef = useScrollAnimation({ threshold: 0.1 });
+
     return (
         <div id='works'
             style={{
@@ -12,8 +16,8 @@ const Works = () => {
                 height: "100vh",
             }}
         >
-            <h1>My works</h1>
-            <div>
+            <h1 ref={titleRef} className='scroll-animate animate-fade'>My works</h1>
+            <div ref={contentRef} className='scroll-animate animate-scale'>
                 <div style={{
                     display: "flex",
                     alignItems: "center",

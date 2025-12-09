@@ -1,28 +1,90 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import './ImageSlider.css';
 
 const ImageSlider = () => {
     const gap = 20;
-    const visibleCount = 1;
-
-    const baseAssetUrl = import.meta.env.BASE_URL;
+    const ANIMATION_DURATION = 300;
 
     const originalImages = [
-        { src: `${baseAssetUrl}assets/Screenshot 2025-11-07 121857.png`, link: 'https://geronimo.okol.org/~huhaar/keystone/' },
-        { src: `${baseAssetUrl}assets/Screenshot 2025-11-07 134055.png`, link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/' },
+        {
+            src: `assets/Screenshot 2025-11-07 121857.png`,
+            link: 'https://geronimo.okol.org/~huhaar/keystone/',
+            title: 'Keystone',
+            description: 'A modern web application with clean design and intuitive navigation.',
+        },
+        {
+            src: `assets/Screenshot 2025-11-07 134055.png`,
+            link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/',
+            title: 'Kotkantien Maalaus',
+            description: 'Professional painting service website with portfolio showcase.',
+        },
+        {
+            src: `assets/Screenshot 2025-11-07 134055.png`,
+            link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/',
+            title: 'Kotkantien Maalaus',
+            description: 'Professional painting service website with portfolio showcase.',
+        },
     ];
 
-    const images = [
-        ...originalImages.slice(-visibleCount),
-        ...originalImages,
-        ...originalImages.slice(0, visibleCount),
-    ];
-
-    const [currentIndex, setCurrentIndex] = useState(visibleCount);
-    const [transition, setTransition] = useState(true);
     const [containerWidth, setContainerWidth] = useState(window.innerWidth);
+    const [currentIndex, setCurrentIndex] = useState(1);
+    const [transition, setTransition] = useState(true);
+    const isAnimatingRef = useRef(false);
+    const transitionTimeoutRef = useRef(null);
 
-    const nextSlide = () => setCurrentIndex((prev) => prev + 1);
-    const prevSlide = () => setCurrentIndex((prev) => prev - 1);
+    // Calculate visible count based on viewport width
+    const getVisibleCount = useCallback(() => {
+        if (containerWidth < 1400) return 1;
+        if (containerWidth < 2000) return 2;
+        return 3;
+    }, [containerWidth]);
+
+    const visibleCount = getVisibleCount();
+
+    // Create an infinitely looping array
+    const images = [
+        originalImages[originalImages.length - 1],
+        ...originalImages,
+        originalImages[0],
+    ];
+
+    // Handle slide transition
+    const handleSlideChange = useCallback((newIndex) => {
+        if (isAnimatingRef.current) return;
+
+        isAnimatingRef.current = true;
+        setTransition(true);
+        setCurrentIndex(newIndex);
+
+        // Clear any existing timeout
+        if (transitionTimeoutRef.current) {
+            clearTimeout(transitionTimeoutRef.current);
+        }
+
+        // Handle wrapping after animation completes
+        transitionTimeoutRef.current = setTimeout(() => {
+            setTransition(false);
+
+            // Wrap around to the beginning
+            if (newIndex >= originalImages.length + 1) {
+                setCurrentIndex(1);
+            }
+            // Wrap around to the end
+            else if (newIndex <= 0) {
+                setCurrentIndex(originalImages.length);
+            }
+
+            isAnimatingRef.current = false;
+        }, ANIMATION_DURATION);
+    }, [originalImages.length]);
+
+    const nextSlide = useCallback(() => {
+        handleSlideChange(currentIndex + 1);
+    }, [currentIndex, handleSlideChange]);
+
+    const prevSlide = useCallback(() => {
+        handleSlideChange(currentIndex - 1);
+    }, [currentIndex, handleSlideChange]);
 
     // Update width on resize
     useEffect(() => {
@@ -31,105 +93,97 @@ const ImageSlider = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Reset transition when looping
+    // Handle keyboard navigation
     useEffect(() => {
-        if (currentIndex === images.length - visibleCount) {
-            setTimeout(() => {
-                setTransition(false);
-                setCurrentIndex(visibleCount);
-            }, 500);
-        } else if (currentIndex === 0) {
-            setTimeout(() => {
-                setTransition(false);
-                setCurrentIndex(images.length - visibleCount * 2);
-            }, 500);
-        } else {
-            setTransition(true);
-        }
-    }, [currentIndex, images.length]);
+        const handleKeyDown = (e) => {
+            if (isAnimatingRef.current) return;
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [nextSlide, prevSlide]);
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (transitionTimeoutRef.current) {
+                clearTimeout(transitionTimeoutRef.current);
+            }
+        };
+    }, []);
 
     // Responsive image width (max 600px, min 90% of viewport)
     const imageWidth = Math.min(600, containerWidth * 0.9);
+    const isAnimating = isAnimatingRef.current;
 
     return (
-        <div style={styles.wrapper}>
-            <button onClick={prevSlide} style={styles.outsideButton}>❮</button>
-            <div style={{
-                ...styles.slider,
-                width: `${visibleCount * (imageWidth + gap)}px`,
-            }}>
+        <div className="slider-container">
+            <div className="slider-wrapper">
                 <div
+                    className="slider-track"
                     style={{
-                        ...styles.slides,
-                        gap: `${gap}px`,
-                        width: `${images.length * (imageWidth + gap)}px`,
-                        transform: `translateX(-${currentIndex * (imageWidth + gap)}px)`,
-                        transition: transition ? 'transform 0.5s ease-in-out' : 'none',
+                        width: `${visibleCount * (imageWidth + gap)}px`,
                     }}
                 >
-                    {images.map((img, index) => (
-                        <a
-                            key={index}
-                            href={img.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={styles.linkWrapper}
-                        >
-                            <img
-                                src={img.src}
-                                alt={`Slide ${index + 1}`}
-                                style={{
-                                    ...styles.image,
-                                    width: `${imageWidth}px`,
-                                    height: 'auto',
-                                }}
-                            />
-                            <i style={{ position: "absolute", bottom: 0, margin: "25px 40px" }} className="fa fa-external-link-alt fa-2x"></i>
-                        </a>
-                    ))}
+                    <div
+                        className="slider-slides"
+                        style={{
+                            gap: `${gap}px`,
+                            width: `${images.length * (imageWidth + gap)}px`,
+                            transform: `translateX(-${currentIndex * (imageWidth + gap)}px)`,
+                            transition: transition ? `transform ${ANIMATION_DURATION}ms cubic-bezier(0.34, 1.56, 0.64, 1)` : 'none',
+                        }}
+                    >
+                        {images.map((img, index) => (
+                            <a
+                                key={index}
+                                href={img.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="slider-card"
+                                style={{ width: `${imageWidth}px` }}
+                            >
+                                <div className="slider-image-container">
+                                    <img
+                                        src={img.src}
+                                        alt={img.title}
+                                        className="slider-image"
+                                    />
+                                    <div className="slider-link-icon">
+                                        <i className="fa fa-external-link-alt fa-lg"></i>
+                                    </div>
+                                </div>
+                                <div className="slider-card-content">
+                                    <h3 className="slider-card-title">{img.title}</h3>
+                                    <p className="slider-card-description">{img.description}</p>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </div>
-            <button onClick={nextSlide} style={styles.outsideButton}>❯</button>
+            <div className="slider-button-container">
+                <button
+                    onClick={prevSlide}
+                    disabled={isAnimating}
+                    className="slider-bottom-button"
+                >
+                    ❮
+                </button>
+                <button
+                    onClick={nextSlide}
+                    disabled={isAnimating}
+                    className="slider-bottom-button"
+                >
+                    ❯
+                </button>
+            </div>
         </div>
     );
-};
-
-const styles = {
-    wrapper: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '20px',
-        margin: 'auto',
-        flexWrap: 'wrap', // allows buttons to wrap on small screens
-    },
-    slider: {
-        height: 'auto',
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    slides: {
-        display: 'flex',
-    },
-    linkWrapper: {
-        display: 'inline-block',
-        textDecoration: 'none',
-        position: 'relative',
-    },
-    image: {
-        maxWidth: '100%',
-        height: 'auto',
-        objectFit: 'cover',
-        borderRadius: "15px",
-    },
-    outsideButton: {
-        fontSize: '32px',
-        color: 'white',
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        userSelect: 'none',
-    },
 };
 
 export default ImageSlider;
