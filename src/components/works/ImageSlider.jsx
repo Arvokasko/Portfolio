@@ -153,9 +153,6 @@ const ImageSlider = () => {
                                         alt={img.title}
                                         className="slider-image"
                                     />
-                                    <div className="slider-link-icon">
-                                        <i className="fa fa-external-link-alt fa-lg"></i>
-                                    </div>
                                 </div>
                                 <div className="slider-card-content">
                                     <h3 className="slider-card-title">{img.title}</h3>
