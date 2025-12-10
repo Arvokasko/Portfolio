@@ -2,53 +2,40 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './ImageSlider.css';
 
 const ImageSlider = () => {
-    const gap = 20;
+    const GAP = 20;
     const ANIMATION_DURATION = 300;
 
-    const originalImages = [
+    const images = [
         {
             src: `assets/Screenshot 2025-11-07 121857.png`,
             link: 'https://geronimo.okol.org/~huhaar/keystone/',
             title: 'Keystone',
-            description: 'A modern web application with clean design and intuitive navigation.',
+            description: 'A modern web application with clean design and intuitive navigation',
         },
         {
             src: `assets/Screenshot 2025-11-07 134055.png`,
             link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/',
             title: 'Kotkantien Maalaus',
-            description: 'Professional painting service website with portfolio showcase.',
+            description: 'Professional painting service website with portfolio showcase',
         },
         {
-            src: `assets/Screenshot 2025-11-07 134055.png`,
-            link: 'https://geronimo.okol.org/~huhaar/KotkantienMaalaus/',
-            title: 'Kotkantien Maalaus',
-            description: 'Professional painting service website with portfolio showcase.',
+            src: `assets/bewo thumbnail.jpg`,
+            link: 'https://github.com/arvokasko/bewo/',
+            title: 'Bewo',
+            description: 'Simple taskcard mobile app with user sharing',
         },
     ];
 
     const [containerWidth, setContainerWidth] = useState(window.innerWidth);
-    const [currentIndex, setCurrentIndex] = useState(1);
+    const [currentIndex, setCurrentIndex] = useState(3);
     const [transition, setTransition] = useState(true);
     const isAnimatingRef = useRef(false);
     const transitionTimeoutRef = useRef(null);
 
-    // Calculate visible count based on viewport width
-    const getVisibleCount = useCallback(() => {
-        if (containerWidth < 1400) return 1;
-        if (containerWidth < 2000) return 2;
-        return 3;
-    }, [containerWidth]);
+    const visibleCount = containerWidth < 1400 ? 1 : containerWidth < 2000 ? 2 : 3;
+    // Create 3 sets of images (9 total) for infinite carousel
+    const loopedImages = [...images, ...images, ...images];
 
-    const visibleCount = getVisibleCount();
-
-    // Create an infinitely looping array
-    const images = [
-        originalImages[originalImages.length - 1],
-        ...originalImages,
-        originalImages[0],
-    ];
-
-    // Handle slide transition
     const handleSlideChange = useCallback((newIndex) => {
         if (isAnimatingRef.current) return;
 
@@ -56,69 +43,54 @@ const ImageSlider = () => {
         setTransition(true);
         setCurrentIndex(newIndex);
 
-        // Clear any existing timeout
-        if (transitionTimeoutRef.current) {
-            clearTimeout(transitionTimeoutRef.current);
-        }
+        if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
 
-        // Handle wrapping after animation completes
         transitionTimeoutRef.current = setTimeout(() => {
             setTransition(false);
+            // Detect when user has scrolled through all images once
+            const totalImages = images.length * 3;
+            let resetIndex = newIndex % totalImages;
+            if (resetIndex < 0) resetIndex += totalImages;
 
-            // Wrap around to the beginning
-            if (newIndex >= originalImages.length + 1) {
-                setCurrentIndex(1);
-            }
-            // Wrap around to the end
-            else if (newIndex <= 0) {
-                setCurrentIndex(originalImages.length);
+            // If user has scrolled past the end of set 1 (indices 3-5) to set 2, jump back to set 1
+            // Or if scrolled past start of set 1 to set 0, jump back to set 2
+            if (newIndex >= images.length * 2) {
+                resetIndex = images.length; // Jump to start of set 2 (which looks like set 1)
+            } else if (newIndex < images.length) {
+                resetIndex = images.length * 2; // Jump to start of set 3 (which looks like set 1)
             }
 
+            setCurrentIndex(resetIndex);
             isAnimatingRef.current = false;
         }, ANIMATION_DURATION);
-    }, [originalImages.length]);
+    }, [images.length]);
 
-    const nextSlide = useCallback(() => {
-        handleSlideChange(currentIndex + 1);
-    }, [currentIndex, handleSlideChange]);
+    const handleNext = useCallback(() => handleSlideChange(currentIndex + 1), [currentIndex, handleSlideChange]);
+    const handlePrev = useCallback(() => handleSlideChange(currentIndex - 1), [currentIndex, handleSlideChange]);
 
-    const prevSlide = useCallback(() => {
-        handleSlideChange(currentIndex - 1);
-    }, [currentIndex, handleSlideChange]);
-
-    // Update width on resize
     useEffect(() => {
         const handleResize = () => setContainerWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Handle keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (isAnimatingRef.current) return;
-            if (e.key === 'ArrowRight') {
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                prevSlide();
-            }
+            if (e.key === 'ArrowRight') handleNext();
+            else if (e.key === 'ArrowLeft') handlePrev();
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [nextSlide, prevSlide]);
+    }, [handleNext, handlePrev]);
 
-    // Cleanup on unmount
     useEffect(() => {
         return () => {
-            if (transitionTimeoutRef.current) {
-                clearTimeout(transitionTimeoutRef.current);
-            }
+            if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
         };
     }, []);
 
-    // Responsive image width (max 600px, min 90% of viewport)
     const imageWidth = Math.min(600, containerWidth * 0.9);
-    const isAnimating = isAnimatingRef.current;
 
     return (
         <div className="slider-container">
@@ -126,19 +98,19 @@ const ImageSlider = () => {
                 <div
                     className="slider-track"
                     style={{
-                        width: `${visibleCount * (imageWidth + gap)}px`,
+                        width: `${visibleCount * (imageWidth + GAP)}px`,
                     }}
                 >
                     <div
                         className="slider-slides"
                         style={{
-                            gap: `${gap}px`,
-                            width: `${images.length * (imageWidth + gap)}px`,
-                            transform: `translateX(-${currentIndex * (imageWidth + gap)}px)`,
+                            gap: `${GAP}px`,
+                            width: `${loopedImages.length * (imageWidth + GAP)}px`,
+                            transform: `translateX(-${currentIndex * (imageWidth + GAP)}px)`,
                             transition: transition ? `transform ${ANIMATION_DURATION}ms cubic-bezier(0.34, 1.56, 0.64, 1)` : 'none',
                         }}
                     >
-                        {images.map((img, index) => (
+                        {loopedImages.map((img, index) => (
                             <a
                                 key={index}
                                 href={img.link}
@@ -153,6 +125,9 @@ const ImageSlider = () => {
                                         alt={img.title}
                                         className="slider-image"
                                     />
+                                    <div className="slider-link-icon-right">
+                                        <i className="fas fa-external-link-alt"></i>
+                                    </div>
                                 </div>
                                 <div className="slider-card-content">
                                     <h3 className="slider-card-title">{img.title}</h3>
@@ -165,15 +140,15 @@ const ImageSlider = () => {
             </div>
             <div className="slider-button-container">
                 <button
-                    onClick={prevSlide}
-                    disabled={isAnimating}
+                    onClick={handlePrev}
+                    disabled={isAnimatingRef.current}
                     className="slider-bottom-button"
                 >
                     ❮
                 </button>
                 <button
-                    onClick={nextSlide}
-                    disabled={isAnimating}
+                    onClick={handleNext}
+                    disabled={isAnimatingRef.current}
                     className="slider-bottom-button"
                 >
                     ❯

@@ -99,7 +99,7 @@ const Sidebar = () => {
                     transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
                     transition: 'opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s',
                 }}>
-                    <a href="https://github.com/arvokasko">
+                    <a className="sidebarLink" href="https://github.com/arvokasko">
                         <i className="fab fa-github" style={{ fontSize: "30px" }}></i>
                     </a>
                 </div>
@@ -149,7 +149,7 @@ const Sidebar = () => {
                             {label}
                         </a>
                     ))}
-                    <a href="https://github.com/arvokasko">
+                    <a className='sidebarLink' href="https://github.com/arvokasko">
                         <i className="fab fa-github" style={{ fontSize: "24px", color: "white" }}></i>
                     </a>
                 </div>
