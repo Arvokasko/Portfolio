@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import * as anime from 'animejs'
 
 const LinkIcons = ({ iconClass, linkUrl }) => {
 
