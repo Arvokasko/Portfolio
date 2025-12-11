@@ -16,7 +16,7 @@ const Works = () => {
                 height: "100vh",
             }}
         >
-            <h1 ref={titleRef} className='scroll-animate animate-fade'>My works</h1>
+            <h1 ref={titleRef} style={{ zIndex: 10 }} className='scroll-animate animate-fade'>My works</h1>
             <div ref={contentRef} className='scroll-animate animate-scale'>
                 <div style={{
                     display: "flex",

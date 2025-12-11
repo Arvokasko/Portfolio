@@ -5,55 +5,27 @@ import AboutMe from './components/aboutMe/AboutMe'
 import Works from './components/works/Works'
 import Contact from './components/contact/Contact'
 import Footer from './components/footer/Footer'
-
-import FOG from "vanta/dist/vanta.fog.min";
-import * as THREE from "three";
-
 import './App.css'
 import './styles/scrollAnimations.css'
 
 function App() {
-
-  const vantaRef = useRef(null);
-  const [vantaEffect, setVantaEffect] = useState(null);
-
-  useEffect(() => {
-    if (!vantaEffect) {
-      setVantaEffect(
-        FOG({
-          el: vantaRef.current,
-          THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200,
-          minWidth: 200,
-          highlightColor: 0x0,
-          midtoneColor: 0x5500aa,
-          lowlightColor: 0x2d1a66,
-          baseColor: 0x0,
-          speed: 1,
-          zoom: 3,
-        })
-      );
-    }
-
-    return () => {
-      if (vantaEffect) vantaEffect.destroy();
-    };
-  }, [vantaEffect]);
-
-
   return (
     <>
       <div
-        ref={vantaRef}
         style={{
-          width: "100%",
-          minHeight: "100vh",
-          position: "relative"
+          backgroundImage: `url('${import.meta.env.BASE_URL}assets/endless-clouds.svg')`,
+          backgroundSize: '100px',
+          backgroundRepeat: 'repeat',
+          minHeight: '100vh',
+          width: '100%',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          animation: 'moveBottomLeft 15s linear infinite'
         }}
-      >
+      />
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <Sidebar />
         <Home />
         <AboutMe />

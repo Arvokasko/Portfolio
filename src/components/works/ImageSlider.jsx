@@ -29,8 +29,10 @@ const ImageSlider = () => {
     const [containerWidth, setContainerWidth] = useState(window.innerWidth);
     const [currentIndex, setCurrentIndex] = useState(3);
     const [transition, setTransition] = useState(true);
+    const [scrollWidth, setScrollWidth] = useState(0);
     const isAnimatingRef = useRef(false);
     const transitionTimeoutRef = useRef(null);
+    const sliderContainerRef = useRef(null);
 
     const visibleCount = containerWidth < 1400 ? 1 : containerWidth < 2000 ? 2 : 3;
     // Create 3 sets of images (9 total) for infinite carousel
@@ -75,6 +77,52 @@ const ImageSlider = () => {
     }, []);
 
     useEffect(() => {
+        let rafId = null;
+        let lastScrollWidth = 0;
+
+        const handleScroll = () => {
+            if (!sliderContainerRef.current) return;
+
+            const rect = sliderContainerRef.current.getBoundingClientRect();
+            const elementTop = rect.top;
+            const elementHeight = rect.height;
+            const windowHeight = window.innerHeight;
+
+            // Calculate position within the element
+            const centerOffset = windowHeight / 2;
+            const distanceFromCenter = elementTop + elementHeight / 2 - centerOffset;
+            const maxDistance = elementHeight / 2 + windowHeight / 2;
+
+            // At center: 100%, stays at 100% after passing center
+            const progress = Math.max(0, 1 - Math.max(distanceFromCenter, 0) / maxDistance);
+            const newScrollWidth = progress * 100;
+
+            // Only update state if value changed (reduces unnecessary re-renders)
+            if (Math.abs(newScrollWidth - lastScrollWidth) > 0.5) {
+                lastScrollWidth = newScrollWidth;
+                setScrollWidth(newScrollWidth);
+            }
+        };
+
+        const throttledScroll = () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(handleScroll);
+        };
+
+        // Small delay to ensure DOM is ready
+        const initialTimeout = setTimeout(() => {
+            handleScroll();
+            window.addEventListener('scroll', throttledScroll);
+        }, 100);
+
+        return () => {
+            clearTimeout(initialTimeout);
+            window.removeEventListener('scroll', throttledScroll);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
+    }, []);
+
+    useEffect(() => {
         const handleKeyDown = (e) => {
             if (isAnimatingRef.current) return;
             if (e.key === 'ArrowRight') handleNext();
@@ -93,7 +141,8 @@ const ImageSlider = () => {
     const imageWidth = Math.min(600, containerWidth * 0.9);
 
     return (
-        <div className="slider-container">
+        <div className="slider-container" ref={sliderContainerRef}>
+            <div style={{ backgroundColor: "#0000008f", height: "75vh", position: "absolute", width: `${Math.min(scrollWidth, 85)}vw`, zIndex: -100, borderRadius: 20 }} />
             <div className="slider-wrapper">
                 <div
                     className="slider-track"
@@ -117,13 +166,15 @@ const ImageSlider = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="slider-card"
-                                style={{ width: `${imageWidth}px` }}
+                                style={{ width: `${imageWidth}px`, marginTop: 80 }}
                             >
                                 <div className="slider-image-container">
                                     <img
                                         src={img.src}
                                         alt={img.title}
                                         className="slider-image"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                     <div className="slider-link-icon-right">
                                         <i className="fas fa-external-link-alt"></i>
