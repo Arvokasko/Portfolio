@@ -152,6 +152,31 @@
     animation-delay: 0.6s;
 }
 
+.scroll-animate-group.animate> :nth-child(6) {
+    animation-name: slideInUp;
+    animation-delay: 0.75s;
+}
+
+.scroll-animate-group.animate> :nth-child(7) {
+    animation-name: slideInUp;
+    animation-delay: 0.9s;
+}
+
+.scroll-animate-group.animate> :nth-child(8) {
+    animation-name: slideInUp;
+    animation-delay: 1.05s;
+}
+
+.scroll-animate-group.animate> :nth-child(9) {
+    animation-name: slideInUp;
+    animation-delay: 1.2s;
+}
+
+.scroll-animate-group.animate> :nth-child(10) {
+    animation-name: slideInUp;
+    animation-delay: 1.35s;
+}
+
 /* Hover animations for link icons */
 @keyframes iconPulse {
     0% {

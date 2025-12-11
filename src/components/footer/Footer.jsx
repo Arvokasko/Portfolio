@@ -12,7 +12,7 @@ const Footer = () => {
             justifyContent: "center",
             alignItems: "center"
         }}>
-            <p>Aaron Huhtala <i className="fa fa-copyright"></i></p>
+            <p><i className="fa fa-copyright"></i> Aaron Huhtala</p>
         </div>
     )
 }

@@ -37,7 +37,7 @@ const Sidebar = () => {
                     setActiveSection(visibleEntries[0].target.id);
                 }
             },
-            { threshold: 0.5 }
+            { threshold: 0.1 }
         );
 
         sectionMap.forEach(({ id }) => {
@@ -115,7 +115,8 @@ const Sidebar = () => {
                 style={{
                     fontSize: '24px',
                     padding: '10px 15px',
-                    background: 'rgba(0,0,0,0.9)',
+                    background: 'rgba(0, 0, 0, 0)',
+                    textShadow: '0px 18px 32px rgba(0, 0, 0, 1)',
                     color: 'white',
                     border: 'none',
                     borderRadius: '5px',
@@ -134,6 +135,7 @@ const Sidebar = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '20px',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
                 }}>
                     {sectionMap.map(({ id, label, href }) => (
                         <a
