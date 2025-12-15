@@ -3,7 +3,6 @@ import './Home.css';
 
 const Home = () => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const videoSrc = `${import.meta.env.BASE_URL}assets/Timeline.mp4`;
 
     useEffect(() => {
         setIsLoaded(true);

@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { debounce } from '../../utils/debounce';
 import './ImageSlider.css';
 
 const ImageSlider = () => {
     const GAP = 20;
     const ANIMATION_DURATION = 300;
 
-    const images = [
+    // Memoize images array to prevent recreation on every render
+    const images = useMemo(() => [
         {
             src: `assets/Screenshot 2025-11-07 121857.png`,
             link: 'https://geronimo.okol.org/~huhaar/keystone/',
@@ -24,7 +26,7 @@ const ImageSlider = () => {
             title: 'Bewo',
             description: 'Simple taskcard mobile app with user sharing',
         },
-    ];
+    ], []);
 
     const [containerWidth, setContainerWidth] = useState(window.innerWidth);
     const [currentIndex, setCurrentIndex] = useState(3);
@@ -36,7 +38,7 @@ const ImageSlider = () => {
 
     const visibleCount = containerWidth < 1400 ? 1 : containerWidth < 2000 ? 2 : 3;
     // Create 3 sets of images (9 total) for infinite carousel
-    const loopedImages = [...images, ...images, ...images];
+    const loopedImages = useMemo(() => [...images, ...images, ...images], [images]);
 
     const handleSlideChange = useCallback((newIndex) => {
         if (isAnimatingRef.current) return;
@@ -71,7 +73,7 @@ const ImageSlider = () => {
     const handlePrev = useCallback(() => handleSlideChange(currentIndex - 1), [currentIndex, handleSlideChange]);
 
     useEffect(() => {
-        const handleResize = () => setContainerWidth(window.innerWidth);
+        const handleResize = debounce(() => setContainerWidth(window.innerWidth), 150);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -97,8 +99,8 @@ const ImageSlider = () => {
             const progress = Math.max(0, 1 - Math.max(distanceFromCenter, 0) / maxDistance);
             const newScrollWidth = progress * 100;
 
-            // Only update state if value changed (reduces unnecessary re-renders)
-            if (Math.abs(newScrollWidth - lastScrollWidth) > 0.5) {
+            // Only update state if value changed significantly (reduces unnecessary re-renders)
+            if (Math.abs(newScrollWidth - lastScrollWidth) > 1) {
                 lastScrollWidth = newScrollWidth;
                 setScrollWidth(newScrollWidth);
             }
@@ -112,7 +114,7 @@ const ImageSlider = () => {
         // Small delay to ensure DOM is ready
         const initialTimeout = setTimeout(() => {
             handleScroll();
-            window.addEventListener('scroll', throttledScroll);
+            window.addEventListener('scroll', throttledScroll, { passive: true });
         }, 100);
 
         return () => {
@@ -138,7 +140,7 @@ const ImageSlider = () => {
         };
     }, []);
 
-    const imageWidth = Math.min(600, containerWidth * 0.9);
+    const imageWidth = useMemo(() => Math.min(600, containerWidth * 0.9), [containerWidth]);
 
     return (
         <div className="slider-container" ref={sliderContainerRef}>

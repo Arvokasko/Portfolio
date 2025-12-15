@@ -1,4 +1,5 @@
 import React from 'react'
+import { debounce } from '../../utils/debounce';
 import Icons from "./Icons";
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 
@@ -10,7 +11,7 @@ const AboutMe = () => {
     const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
 
     React.useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        const handleResize = debounce(() => setIsMobile(window.innerWidth < 768), 150);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);

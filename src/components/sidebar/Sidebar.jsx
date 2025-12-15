@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { debounce } from '../../utils/debounce';
 import './Sidebar.css';
 
 const sectionMap = [
@@ -21,23 +22,38 @@ const Sidebar = () => {
 
     // Handle screen resize
     useEffect(() => {
-        const handleResize = () => {
+        const handleResize = debounce(() => {
             setIsMobile(window.innerWidth < 1500);
-        };
+        }, 150);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Handle section highlighting
+    // Handle section highlighting with optimized IntersectionObserver
     useEffect(() => {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50% 0px'
+        };
+
         const observer = new IntersectionObserver(
             (entries) => {
-                const visibleEntries = entries.filter(entry => entry.isIntersecting);
-                if (visibleEntries.length > 0) {
-                    setActiveSection(visibleEntries[0].target.id);
+                // Find the most visible section by intersection ratio
+                let mostVisible = null;
+                let maxRatio = 0;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        mostVisible = entry.target.id;
+                    }
+                });
+
+                if (mostVisible) {
+                    setActiveSection(mostVisible);
                 }
             },
-            { threshold: 0.1 }
+            observerOptions
         );
 
         sectionMap.forEach(({ id }) => {

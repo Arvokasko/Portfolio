@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from 'react'
 import Sidebar from './components/sidebar/Sidebar'
 import Home from './components/home/Home'
 import AboutMe from './components/aboutMe/AboutMe'
