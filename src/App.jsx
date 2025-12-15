@@ -21,7 +21,8 @@ function App() {
           zIndex: -2,
           background: 'linear-gradient(135deg, #111111ff, #2d0057ff, #111111ff)',
           backgroundSize: '800% 800%',
-          animation: 'gradientAnimation 5s linear infinite'
+          animation: 'gradientAnimation 5s linear infinite',
+          willChange: 'background-position'
         }}
       />
       {/* Static SVG overlay */}

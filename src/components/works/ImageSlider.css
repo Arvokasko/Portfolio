@@ -30,6 +30,7 @@
 
 .slider-slides {
     display: flex;
+    will-change: transform;
 }
 
 .slider-card {
@@ -86,6 +87,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     cursor: pointer;
+    will-change: opacity;
 }
 
 .slider-card:hover .slider-link-icon {
@@ -99,6 +101,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     cursor: pointer;
+    will-change: opacity;
 }
 
 .slider-card-content {

@@ -39,9 +39,6 @@ const AboutMe = () => {
                 </p>
             </div>
             <div ref={contentRef} style={{ maxWidth: "1200px", width: "90%", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "40px", alignItems: isMobile ? "center" : "flex-start" }} className='scroll-animate animate-slide-up'>
-
-                {/* <p style={{ marginTop: 40, marginBottom: 40 }}>
-                </p> */}
                 <div style={{ flex: 1, overflowWrap: "break-word", fontSize: isMobile ? 30 : 50, margin: isMobile ? 0 : 50, position: isMobile ? "static" : "sticky", top: isMobile ? "auto" : "33%" }}>
                     <h2>My toolbox</h2>
                 </div>
